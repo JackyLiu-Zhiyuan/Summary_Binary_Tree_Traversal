@@ -1,0 +1,68 @@
+# input is a binary search tree
+#
+# left < current < right O(NlgN)
+# inorder traversal in ascending orders in O(n)
+#
+# input is a matrix/graph
+# BFS (queue)  O(N)
+# DFS (stack,recursion) O(N)
+#
+#
+# Matrix Traversal:
+
+
+def dfs(grid, i, j, visited):
+    if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or (i, j) in visited:
+        return
+    print(grid[i][j], end=" ")
+    visited.add((i, j))
+    dfs(grid, i + 1, j, visited)
+    dfs(grid, i - 1, j, visited)
+    dfs(grid, i, j + 1, visited)
+    dfs(grid, i, j - 1, visited)
+
+
+from collections import deque
+dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+
+
+def bfs(grid, _i, _j):
+    q = deque([[_i, _j]])
+    visited = {(_i, _j)}
+
+    while q:
+        cur = q.popleft()
+        print(grid[cur[0]][cur[1]], end=" ")
+
+        for dir in dirs:
+            i = cur[0] + dir[0]
+            j = cur[1] + dir[1]
+
+            if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or (i, j) in visited:
+                continue
+
+            visited.add((i, j))
+            q.append([i, j])
+
+grid = [
+    [ 1, 2, 3 ],
+    [ 4, 5, 6 ],
+    [ 7, 8, 9 ],
+]
+
+print("DFS: ", end = "")
+dfs(grid, 0, 0, set())
+print()
+print("BFS: ", end = "")
+bfs(grid, 0, 0)
+
+# [1,2,3,]
+# dfs(grid, i + 1, j, visited)
+# dfs(grid, i - 1, j, visited)
+# dfs(grid, i, j + 1, visited)
+# dfs(grid, i, j - 1, visited)
+
+
+
+
+
